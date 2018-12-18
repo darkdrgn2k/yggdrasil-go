@@ -21,12 +21,13 @@ if [ $PKGBRANCH = "master" ]; then
   PKGREPLACES=yggdrasil-develop
 fi
 
+PKGDEBARCH = "$PKGARCH"
 if [ $PKGARCH = "amd64" ]; then GOARCH=amd64 GOOS=linux ./build
 elif [ $PKGARCH = "i386" ]; then GOARCH=386 GOOS=linux ./build
 elif [ $PKGARCH = "mipsel" ]; then GOARCH=mipsle GOOS=linux ./build
 elif [ $PKGARCH = "mips" ]; then GOARCH=mips64 GOOS=linux ./build
 elif [ $PKGARCH = "armhf" ]; then GOARCH=arm GOOS=linux GOARM=7 ./build
-elif [ $PKGARCH = "armv6" ]; then  export PKGARCH="armhf"; GOARCH=arm GOOS=linux GOARM=6 ./build;
+elif [ $PKGARCH = "armv6" ]; then  export PKGDEBARCH="armhf"; GOARCH=arm GOOS=linux GOARM=6 ./build;
 elif [ $PKGARCH = "arm64" ]; then GOARCH=arm64 GOOS=linux ./build
 else
   echo "Specify PKGARCH=amd64,i386,mips,mipsel,armv6,armhf,arm64"
@@ -49,7 +50,7 @@ Package: $PKGNAME
 Version: $PKGVERSION
 Section: contrib/net
 Priority: extra
-Architecture: $PKGARCH
+Architecture: $PKGDEBARCH
 Replaces: $PKGREPLACES
 Conflicts: $PKGREPLACES
 Maintainer: Neil Alexander <neilalexander@users.noreply.github.com>
